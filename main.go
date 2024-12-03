@@ -6,10 +6,12 @@ func main() {
 	left, right, err := ParseInput("inputs/day1/input1.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
 	}
 
+	Sort(left, right)
+
+	dif := FindDif(left, right)
+
 	// Print results
-	fmt.Println("Left List:", left)
-	fmt.Println("Right List:", right)
+	fmt.Println("Total Dif:", dif)
 }

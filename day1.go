@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -15,6 +16,8 @@ import (
     a. Calculate the distance as distance(left[i] - right[i]).
     b. Add this distance to `totalDistance`.
 5. Output `totalDistance`. */
+
+// 1. Parse the input into two lists, `left` and `right`.
 
 // Parse the input string into two seperate lists of integers
 func ParseInput(input string) ([]int, []int, error) {
@@ -60,4 +63,22 @@ func ParseInput(input string) ([]int, []int, error) {
 	}
 
 	return left, right, nil
+}
+
+// 2. Sort both lists from lowest to highest.
+func Sort(left []int, right []int) {
+	sort.Ints(left)
+	sort.Ints(right)
+}
+
+func FindDif(left, right []int) int {
+	var totalDif int
+	for i := range left {
+		dif := left[i] - right[i]
+		if dif < 0 {
+			dif = -dif
+		}
+		totalDif += dif
+	}
+	return totalDif
 }
