@@ -82,3 +82,27 @@ func FindDif(left, right []int) int {
 	}
 	return totalDif
 }
+
+// Part Two
+
+// Find out how many times the left
+// number shows up in the right list.
+
+func PartTwo(left, right []int) int {
+	// Create a map to store the counts
+	counts := make(map[int]int)
+	for _, num := range right {
+		counts[num]++
+	}
+
+	// Calc the similarity score
+	similarityScore := 0
+	for _, num := range left {
+		if count, exists := counts[num]; exists {
+			similarityScore += num * count
+		}
+	}
+
+	fmt.Println("Similarity score is:", similarityScore)
+	return similarityScore
+}

@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 func main() {
+	// Part One
 	left, right, err := ParseInput("inputs/day1/input1.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -14,4 +15,7 @@ func main() {
 
 	// Print results
 	fmt.Println("Total Dif:", dif)
+
+	// Part Two
+	PartTwo(left, right)
 }
