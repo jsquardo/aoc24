@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	// Part One
-	left, right, err := ParseInput("inputs/day1/input1.txt")
+	left, right, err := ParseInput("inputs/day1.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
