@@ -1,17 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	file := "inputs/day2.txt"
-
-	// Call DayTwoPartOne func
-	numbers, err := DayTwoPartOne(file)
+	combined, err := ParseFile("../inputs/day2.txt")
 	if err != nil {
-		fmt.Println("Error parsing file:", err)
+		fmt.Println("Error:", err)
 		return
 	}
 
-	// Print parsed numbers
-	fmt.Println("Numbers:", numbers)
+	fmt.Println("Combined Lines:")
+	for _, line := range combined {
+		fmt.Println(line)
+	}
 }
