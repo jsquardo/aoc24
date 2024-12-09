@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -31,4 +32,15 @@ func ParseFile(input string) ([]string, error) {
 		}
 	}
 	return combinedLines, nil
+}
+
+func checkValid(line string) bool {
+	for i := 0; i < len(line)-1; i++ {
+		// Convert the current and next char to int
+		current, err1 := strconv.Atoi(string(line[i]))
+		next, err2 := strconv.Atoi(string(line[i+1]))
+		if err1 != nil || err2 != nil {
+			return false
+		}
+	}
 }
