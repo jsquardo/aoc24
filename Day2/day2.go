@@ -8,39 +8,79 @@ import (
 	"strings"
 )
 
-func ParseFile(input string) ([]string, error) {
+func ParseFile(input string) ([][]int, error) {
 	file, err := os.Open(input)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file %w", err)
 	}
 	defer file.Close()
 
-	var combinedLines []string
+	var reports [][]int
 	scanner := bufio.NewScanner(file)
 
-	// Read the file line by line
 	for scanner.Scan() {
 		line := scanner.Text()
+		parts := strings.Fields(line)
 
-		// Split the line by whitespace and join without spaces
-		combined := strings.Join(strings.Fields(line), "")
-		combinedLines = append(combinedLines, combined)
-
-		// Check for errors
-		if err := scanner.Err(); err != nil {
-			return nil, fmt.Errorf("frror reading file %w", err)
+		var report []int
+		for _, part := range parts {
+			num, err := strconv.Atoi(part)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse number %q: %w", part, err)
+			}
+			report = append(report, num)
 		}
+		reports = append(reports, report)
 	}
-	return combinedLines, nil
+
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("error reading file: %w", err)
+	}
+	return reports, nil
 }
 
-func checkValid(line string) bool {
-	for i := 0; i < len(line)-1; i++ {
-		// Convert the current and next char to int
-		current, err1 := strconv.Atoi(string(line[i]))
-		next, err2 := strconv.Atoi(string(line[i+1]))
-		if err1 != nil || err2 != nil {
+func IsValid(report []int) bool {
+	if len(report) < 2 {
+		// A single number or empty report is trivially valid
+		return true
+	}
+
+	// Determine the direction: increasing, decreasing, or invalid
+	direction := 0 // 1 for increasing, -1 for decreasing
+
+	for i := 0; i < len(report)-1; i++ {
+		diff := report[i+1] - report[i]
+
+		// Ensure the difference is within the valid range
+		if diff < -3 || diff > 3 || diff == 0 {
 			return false
 		}
+
+		// Determine the direction
+		if diff > 0 {
+			if direction == -1 {
+				// Switching from decreasing to increasing
+				return false
+			}
+			direction = 1
+		} else if diff < 0 {
+			if direction == 1 {
+				// Switching from increasing to decreasing
+				return false
+			}
+			direction = -1
+		}
 	}
+
+	return true
+}
+
+func CountValidlines(reports [][]int) int {
+	count := 0
+	for _, report := range reports {
+		if IsValid(report) {
+			count++
+		}
+	}
+	return count
 }
