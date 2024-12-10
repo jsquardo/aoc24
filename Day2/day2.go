@@ -84,3 +84,25 @@ func CountValidlines(reports [][]int) int {
 	}
 	return count
 }
+
+// Part 2
+// This should check if a report is safe as-is or with one level removed
+func IsValidWithDampener(report []int) bool {
+	if IsValid(report) {
+		return true
+	}
+
+	// Remove each level and check if the modified report is valid
+	for i := 0; i < len(report); i++ {
+		// Create new report with index level removed
+		modifiedReport := append([]int{}, report[:i]...)
+		modifiedReport = append(modifiedReport, report[i+1:]...)
+
+		// Check modified report
+		if IsValid(modifiedReport) {
+			return true
+		}
+	}
+	// If no valid modification was found, the report is unsafe
+	return false
+}
