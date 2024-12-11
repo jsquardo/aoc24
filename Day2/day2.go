@@ -106,3 +106,13 @@ func IsValidWithDampener(report []int) bool {
 	// If no valid modification was found, the report is unsafe
 	return false
 }
+
+func CountValidLinesWithDampener(reports [][]int) int {
+	count := 0
+	for _, report := range reports {
+		if IsValidWithDampener(report) {
+			count++
+		}
+	}
+	return count
+}

@@ -10,6 +10,6 @@ func main() {
 		fmt.Println("Error:", err)
 		return
 	}
-	valid := CountValidlines(lines)
-	fmt.Println("Safe Reports:", valid)
+	validCount := CountValidLinesWithDampener(lines)
+	fmt.Println("Safe Reports(with dampener):", validCount)
 }
